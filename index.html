@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello World Animation</title>
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --duration: 0.08s;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      color: var(--fg);
+      overflow: hidden;
+      font-family: "Brush Script MT", "Segoe Script", "Lucida Handwriting", cursive;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 12vw, 7rem);
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
+    }
+
+    .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(-0.4em) skewX(-14deg);
+      animation: reveal var(--duration) ease-out forwards;
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateX(0) skewX(-14deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="text" aria-label="hello world"></h1>
+
+  <script>
+    const text = "hello world";
+    const el = document.getElementById("text");
+
+    text.split("").forEach((ch, i) => {
+      const span = document.createElement("span");
+      span.className = "char";
+      span.textContent = ch === " " ? "\u00A0" : ch;
+      span.style.animationDelay = `${i * 0.06}s`;
+      el.appendChild(span);
+    });
+  </script>
+</body>
+</html>
